@@ -145,10 +145,12 @@ ansible all -a "yum remove git* maven* httpd* -y"
 ---
 
 # 📦 Modules
+- It's a Key-Value pair.
+- We can use different Modules for different purpose.
+- Modules are reusable components.
+- Module flag is **-m**
 
-Modules are reusable components.
-
-## Yum Module
+## yum Module
 
 ```bash
 ansible all -m yum -a "name=git state=present"
@@ -184,7 +186,16 @@ ansible all -m copy -a "src=saim.txt dest=/tmp"
 
 # 📜 Playbooks
 
-Playbooks are written in YAML.
+- Playbooks are written in YAML.
+- Playbooks used to execute multiple modules.
+- We can reuse the Playbook multiple times.
+- In real time we use a Playbook to automate our work.
+- For deployment, pkg installation, server creation,...
+- Here we use Key-Value pairs.
+- Key-Value can also be called as Directory.
+- **YAML:** Yet Another Markup Language.
+- Extension for Playbook is **.yaml** or **.yaml**
+- Playbook start with **--** and end with **...** (optional). 
 
 ## Basic Structure
 
@@ -248,8 +259,8 @@ ansible all -m setup | grep -i cores
 ---
 
 # 🏷️ Tags
-
-Execute specific tasks.
+- By default Ansible execute all tasks sequentially in a Playbook.
+- We can use Tags to execute a specific tasks or to skip a specific tasks.
 
 ## Example
 
@@ -293,6 +304,8 @@ ansible-playbook playbook.yml --skip-tags web
 # 🔄 Variables
 
 ## Static Variables
+- We can define these variables inside the Playbook and use for multiple times
+- Once a variable is defined here it will not change until we change
 
 ```yaml
 - hosts: all
@@ -316,7 +329,8 @@ ansible-playbook playbook.yml --skip-tags web
 
 ---
 
-# ⚙️ Dynamic Variables
+## Dynamic Variables
+- These variales will be defined outside the Playbook and these will change as per our requirements.
 
 ```yaml
 - hosts: all
@@ -363,7 +377,7 @@ Reduce repetitive code.
 
 ---
 
-# 👤 Create Multiple Users
+## 👤 Create Multiple Users
 
 ```yaml
 - hosts: all
@@ -385,8 +399,10 @@ Reduce repetitive code.
 ---
 
 # 🔔 Handlers
-
-Triggered only when notified.
+- When we have two tasks in a single Playbook if task 1 is depending upon task 2 so then we can use the concept called Handlers.
+- Once task 1 is executed successfully it will notify task 2 to perform the operation.
+- The name of the notify and the name of the task 2 must be same.
+- Triggered only when notified.
 
 ```yaml
 - hosts: all
@@ -434,6 +450,11 @@ raw > command > shell
 ---
 
 # ✅ Conditions
+**Cluster:** Group of Servers
+**Homogeneous:** All servers have having same OS and Flavour.
+**Heterogeneous:** All servers have different OS and Flavour.
+
+- Used to execute this module when we have different Clusters.
 
 ```yaml
 - hosts: all
@@ -496,8 +517,14 @@ raw > command > shell
       debug:
         msg: "Welcome to Ansible"
 ```
-
 ---
+**NAME:** ansible_nodename
+**FAMILY:** ansible_os_familyl
+**PKG:** ansible_pkg_mgr
+**CPU:** ansible_processor_cores
+**MEM:** ansible_memtotal_mb
+**FREE:** ansible_memfree_mb
+
 
 # 🧩 Jinja2 Templates
 
@@ -506,6 +533,7 @@ Used for dynamic/customized outputs using variables.
 ---
 
 # 🔍 Lookups
+-This module used to get data from files, db and key values.
 
 ```yaml
 - hosts: dev
@@ -522,18 +550,25 @@ Used for dynamic/customized outputs using variables.
 ---
 
 # 🚀 Strategies
+- Way of executing the Playbook.
 
 ## Linear
-Executes sequentially.
+- Executes sequentially.
+- If task-1 is executed on server-1 it will wait till task-2 execution.
 
 ## Free
-Executes tasks independently on all nodes.
+- Executes tasks independently on all nodes.
+- If task-1 is executed on server-1 it won't wait till task-2 execution.
 
 ---
 
-# 📁 Roles
-
-Roles organize playbooks into reusable structures.
+# 📁 Roles 
+- Roles organize playbooks into reusable structures format.
+- Main purpose of Roles is to encapsulate the data.
+- We can reuse the Roles multiple times.
+- Length of the Playbook is decreased.
+- It contains on vars, templates, tasks,...
+- In real time we use Roles for our daily activities.
 
 ## Directory Structure
 
@@ -561,8 +596,12 @@ roles/
 ---
 
 # 🌌 Ansible Galaxy
-
-Repository for sharing reusable roles.
+- Ansible galaxy is a website where users can share Roles and to a command-line tool for installing, creating, and managing Roles.
+- Ansible galaxy gives greater visibility to one of Ansible’s most exiting features, such as application
+- installation or reusable Roles for server configuration.
+- Lots of people share Roles in the Ansible Galaxy.
+- Ansible Roles consist of many Playbooks, which is a way to group multiple tasks into one container to do the automation in a very effective manner with clean, directory structure.
+- Repository for sharing reusable roles.
 
 ```bash
 ansible-galaxy init role_name
@@ -571,26 +610,33 @@ ansible-galaxy init role_name
 ---
 
 # 🔐 Ansible Vault
-
-Encrypt sensitive files.
+- It is used to encrypt the files, Playbooks, ….
+- Technique: AES256 (USED BY FACEBOOK, AWS)
+- Vault will store our data very safely and securely.
+- If we want access any data which is in the vault we need to give a password.
+- **Note:** we can restrict the users to access the Playbook also.
+- Encrypt sensitive files.
 
 ## Commands
 
 ```bash
-ansible-vault create creds.txt
+ansible-vault create creds.txt    : to create a vault
 
-ansible-vault edit creds.txt
+ansible-vault edit creds.txt      : to edit a vault
 
-ansible-vault view creds.txt
+ansible-vault view creds.txt      : to show the content without decrypt
 
-ansible-vault encrypt creds.txt
+ansible-vault encrypt creds.txt   : to encrypt the content
 
-ansible-vault decrypt creds.txt
+ansible-vault decrypt creds.txt   : to decrypt the content
+
+ansible-vault rekey creds.txt     : to change password for a vault
 ```
 
 ---
 
 # 🐍 PIP Module
+- It’s a package manager used to install python libraries/modules.
 
 ```yaml
 - hosts: all
@@ -625,8 +671,9 @@ ansible-vault decrypt creds.txt
 ---
 
 # 🧪 Dry Run
-
-Validate playbook without making changes.
+- Validate playbook without making changes.
+- Ansible Dry Run or Ansible Check Mode feature is to validate your Playbook before execution.
+- If we execute the Playbook with dry it won’t do any changes to the worker nodes.
 
 ```bash
 ansible-playbook playbook.yml --check
@@ -635,6 +682,9 @@ ansible-playbook playbook.yml --check
 ---
 
 # ⏳ Async & Polling
+- For every task in Ansible we can set time limit.
+- If the task is not performed in that time limit Ansible will stop Playbook execution.
+- This is called as Asynchronous and Polling.
 
 ```yaml
 - hosts: all
@@ -742,11 +792,11 @@ aws configure
 
 ## Types
 
-- Choice
-- String
-- Multi-line String
-- File
-- Boolean
+- **Choice:** To pass single input at a time
+- **String:** To pass multiple inputs at a time
+- **Multi-line String:** To pass multiple inputs on multiple lines at a time
+- **File:** To pass the file as input
+- **Boolean:** To pass input either **Yes** or **No**
 
 ---
 
