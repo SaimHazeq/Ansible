@@ -450,9 +450,9 @@ raw > command > shell
 ---
 
 # ✅ Conditions
-**Cluster:** Group of Servers
-**Homogeneous:** All servers have having same OS and Flavour.
-**Heterogeneous:** All servers have different OS and Flavour.
+- **Cluster:** Group of Servers
+- **Homogeneous:** All servers have having same OS and Flavour.
+- **Heterogeneous:** All servers have different OS and Flavour.
 
 - Used to execute this module when we have different Clusters.
 
@@ -518,12 +518,12 @@ raw > command > shell
         msg: "Welcome to Ansible"
 ```
 ---
-**NAME:** ansible_nodename
-**FAMILY:** ansible_os_familyl
-**PKG:** ansible_pkg_mgr
-**CPU:** ansible_processor_cores
-**MEM:** ansible_memtotal_mb
-**FREE:** ansible_memfree_mb
+- **NAME:** ansible_nodename
+- **FAMILY:** ansible_os_familyl
+- **PKG:** ansible_pkg_mgr
+- **CPU:** ansible_processor_cores
+- **MEM:** ansible_memtotal_mb
+- **FREE:** ansible_memfree_mb
 
 
 # 🧩 Jinja2 Templates
